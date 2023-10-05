@@ -8,6 +8,6 @@ def make_withdraw_list(balance):
       return b
    return withdraw
 
-# withdraw = make_withdraw_list(100)
-# withdraw(25)
-# withdraw(213)
+withdraw = make_withdraw_list(100)
+withdraw(25)
+withdraw(213)
