@@ -64,13 +64,13 @@ def end(s):
 def planet(mass):
     """Construct a planet of some mass."""
     assert mass > 0
-    "*** YOUR CODE HERE ***"
+    return ['planet', mass]
 
 
 def mass(w):
     """Select the mass of a planet."""
     assert is_planet(w), 'must call mass on a planet'
-    "*** YOUR CODE HERE ***"
+    return w[1]
 
 
 def is_planet(w):
@@ -130,7 +130,15 @@ def balanced(m):
     >>> check(HW_SOURCE_FILE, 'balanced', ['Index'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    if is_planet(m):
+        return True
+    l, r = end(left(m)), end(right(m))
+    if total_weight(l) * length(left(m)) != total_weight(r) * length(right(m)):
+        return False
+    else:
+        return balanced(l) and balanced(r)
+
+
 
 
 def totals_tree(m):
@@ -162,7 +170,13 @@ def totals_tree(m):
     >>> check(HW_SOURCE_FILE, 'totals_tree', ['Index'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    if is_planet(m):
+        return tree(mass(m))
+    else:
+        l_branch = totals_tree(end(left(m)))
+        r_branch = totals_tree(end(right(m)))
+        return tree(total_weight(m), [l_branch, r_branch])
+        
 
 
 def replace_loki_at_leaf(t, lokis_replacement):
@@ -194,7 +208,13 @@ def replace_loki_at_leaf(t, lokis_replacement):
     >>> laerad == yggdrasil # Make sure original tree is unmodified
     True
     """
-    "*** YOUR CODE HERE ***"
+    if is_leaf(t):
+        if label(t) == 'loki':
+            return tree(lokis_replacement)
+        else:
+            return t
+    else:
+        return tree(label(t), [replace_loki_at_leaf(b, lokis_replacement) for b in branches(t)])
 
 
 def has_path(t, word):
@@ -228,7 +248,13 @@ def has_path(t, word):
     False
     """
     assert len(word) > 0, 'no path for empty word.'
-    "*** YOUR CODE HERE ***"
+    if len(word) == 1 and label(t) == word:
+        return True
+    else:
+        if label(t) == word[0]:
+            return any([has_path(b, word[1:]) for b in branches(t)])
+        return False
+
 
 
 def str_interval(x):
