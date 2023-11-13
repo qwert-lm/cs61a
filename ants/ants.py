@@ -25,9 +25,8 @@ class Place:
         self.ant = None       # An Ant
         self.entrance = None  # A Place
         # Phase 1: Add an entrance to the exit
-        # BEGIN Problem 2
-        "*** YOUR CODE HERE ***"
-        # END Problem 2
+        if self.exit:
+            exit.entrance = self
 
     def add_insect(self, insect):
         """
@@ -157,6 +156,7 @@ class HarvesterAnt(Ant):
 
     name = 'Harvester'
     implemented = True
+    food_cost = 2
     # OVERRIDE CLASS ATTRIBUTES HERE
 
     def action(self, gamestate):
@@ -165,7 +165,7 @@ class HarvesterAnt(Ant):
         gamestate -- The GameState, used to access game state information.
         """
         # BEGIN Problem 1
-        "*** YOUR CODE HERE ***"
+        gamestate.food += 1
         # END Problem 1
 
 
@@ -175,7 +175,9 @@ class ThrowerAnt(Ant):
     name = 'Thrower'
     implemented = True
     damage = 1
-    # ADD/OVERRIDE CLASS ATTRIBUTES HERE
+    food_cost = 3
+    lower_bound = float("-inf")
+    upper_bound = float("inf")
 
     def nearest_bee(self):
         """Return the nearest Bee in a Place that is not the HIVE, connected to
@@ -183,9 +185,30 @@ class ThrowerAnt(Ant):
 
         This method returns None if there is no such Bee (or none in range).
         """
-        # BEGIN Problem 3 and 4
-        return random_bee(self.place.bees)  # REPLACE THIS LINE
-        # END Problem 3 and 4
+        def have_bee(place):
+            return False if len(place.bees) == 0 else True
+        if self.upper_bound < 0:
+            return None
+        distance = 0
+        def find_cloest_bee_place_in_range(place, lower_bound, upper_bound):
+            current_place = place
+            bee_flag = have_bee(place)
+            distance = 0
+            while not bee_flag and distance <= upper_bound:
+                current_place = current_place.entrance
+        
+        distince = 0
+        current_place = self.place
+        bee_flag = have_bee(current_place)
+        # decide is there bees in ant place
+        if not bee_flag:
+            while not bee_flag:
+                current_place = current_place.entrance
+                bee_flag = have_bee(current_place)
+        if not current_place or current_place.is_hive:
+            return None
+        else:
+            return random_bee(current_place.bees)           
 
     def throw_at(self, target):
         """Throw a leaf at the TARGET Bee, reducing its health."""
