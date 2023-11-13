@@ -81,3 +81,29 @@ def count_paths(t, total):
     else:
         found = 0
     return found + sum([count_paths(b, total - label(t)) for b in branches(t)])
+
+def list_paths(t, value):
+    """List all path to value node
+    
+    >>> t2 = tree(2, [tree(3), tree(4, [tree(6)]), tree(5)])
+    >>> list_paths(t2, 6)
+    [[2, 4, 6]]
+    >>> t1 = tree(1, [tree(2, [tree(3), tree(4, [tree(6)]), tree(5)]), tree(5)])
+    >>> list_paths(t1, 6)
+    [[1, 2, 4, 6]]
+    """
+    res = []
+    if label(t) == value and is_leaf(t):
+        return [[label(t)]]
+    else:
+        for branch in branches(t):
+            branch_path = list_paths(branch, value)
+            for path in branch_path:
+                res.append([label(t)] + path)
+    return res
+
+# t1 = t1 = tree(1, [tree(2, [tree(3), tree(4, [tree(6)]), tree(5)]), tree(5)])
+# print(list_paths(t1, 6))
+# t2 = tree(2, [tree(3), tree(4, [tree(6)]), tree(5)])
+# print_tree(t2)
+# print(list_paths(t2, 6))

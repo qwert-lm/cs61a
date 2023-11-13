@@ -1,13 +1,20 @@
-def make_withdraw_list(balance):
-   b = balance
-   def withdraw(amount):
-      nonlocal b
-      if amount > b:
-         return "Insufficient funds"
-      b = b - amount
-      return b
-   return withdraw
-
-withdraw = make_withdraw_list(100)
-withdraw(25)
-withdraw(213)
+class A:
+   z = - 1
+   def f(self, x):
+      return B(x-1)
+   
+class B(A):
+   n = 4
+   def __init__(self, y):
+      if y:
+         self.z = self.f(y)
+      else:
+         self.z = C(y+1)
+         
+class C(B):
+   def f(self, x):
+      return x
+   
+a = A()
+b = B(1)
+b.n = 5
