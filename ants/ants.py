@@ -261,7 +261,6 @@ class FireAnt(Ant):
     name = 'Fire'
     damage = 3
     food_cost = 5
-    # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 5
     implemented = True   # Change to True to view in the GUI
     # END Problem 5
@@ -288,9 +287,13 @@ class FireAnt(Ant):
             
         
 
-# BEGIN Problem 6
-# The WallAnt class
-# END Problem 6
+class WallAnt(Ant):
+    name = "Wall"
+    food_cost = 4
+    implemented = True
+    
+    def __init__(self, health=4):
+        super().__init__(health)
 
 # BEGIN Problem 7
 # The HungryAnt Class
