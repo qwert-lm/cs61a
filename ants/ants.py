@@ -295,9 +295,34 @@ class WallAnt(Ant):
     def __init__(self, health=4):
         super().__init__(health)
 
-# BEGIN Problem 7
-# The HungryAnt Class
-# END Problem 7
+class HungryAnt(Ant):
+    name = "Hungry"
+    food_cost = 4
+    implemented = True
+    chewing_turns = 3
+    
+    def __init__(self, health=1):
+        """Set initial health to 1
+        """
+        self.turns_to_chew = 0
+        super().__init__(health)
+    
+    def action(self, gamestate):
+        """Chew a random bee in the same place
+        """
+        if self.turns_to_chew > 0:
+            self.turns_to_chew -= 1
+        else:
+            # check whether there is bees
+            bees_list = self.place.bees
+            if bees_list:
+                target_bee = random_bee(bees_list)
+                # eating a random bee 
+                target_bee.reduce_health(target_bee.health)
+                self.turns_to_chew = self.chewing_turns
+                
+    
+    
 
 
 class ContainerAnt(Ant):
