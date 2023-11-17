@@ -431,10 +431,6 @@ class QueenAnt(ScubaThrower):  # You should change this line
         Returns a new instance of the Ant class if it is possible to construct, or
         returns None otherwise. Remember to call the construct() method of the superclass!
         """
-        if cls.food_cost > gamestate.food:
-            print('Not enough food remains to place ' + cls.__name__)
-            return
-        # I add a class variable to indict if we have created a QueenAnt()
         if not gamestate.has_queen:
             gamestate.has_queen = True
             return super().construct(gamestate)
