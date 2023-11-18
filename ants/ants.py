@@ -413,11 +413,9 @@ class ScubaThrower(ThrowerAnt):
     food_cost = 6
     is_waterproof = True
 
-# BEGIN Problem 12
-
 
 class QueenAnt(ScubaThrower):  # You should change this line
-# END Problem 12
+
     """The Queen of the colony. The game is over if a bee enters her place."""
 
     name = 'Queen'
@@ -561,15 +559,26 @@ class SlowThrower(ThrowerAnt):
 
     name = 'Slow'
     food_cost = 6
-    # BEGIN Problem EC
-    implemented = False   # Change to True to view in the GUI
-    # END Problem EC
+    damage = 0
+    implemented = True   # Change to True to view in the GUI
+    slowing_turn = 5
 
     def throw_at(self, target):
-
-        # BEGIN Problem EC
-        "*** YOUR CODE HERE ***"
-        # END Problem EC
+        
+        # 定义减缓效果的action方法
+        def slowed_action(gamestate):
+            if target.slow_remain > 0:
+                target.slow_remain -= 1
+                if gamestate.time % 2 == 0:
+                    Bee.action(target, gamestate)
+            else:
+                Bee.action(target, gamestate)
+        
+        # 设置减缓效果的初始状态
+        target.slow_remain = self.slowing_turn
+        target.action = slowed_action
+        
+        
 
 
 class LaserAnt(ThrowerAnt):
