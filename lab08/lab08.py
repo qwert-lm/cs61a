@@ -7,7 +7,11 @@ def convert_link(link):
     >>> convert_link(Link.empty)
     []
     """
-    "*** YOUR CODE HERE ***"
+    if link is Link.empty:
+        return []
+    else:
+        return [link.first] + convert_link(link.rest)
+        
 
 
 def duplicate_link(link, val):
@@ -29,7 +33,14 @@ def duplicate_link(link, val):
     >>> z
     Link(1, Link(2, Link(2, Link(2, Link(2, Link(3))))))
     """
-    "*** YOUR CODE HERE ***"
+    current_node = link
+    while current_node is not Link.empty:
+        if current_node.first == val:
+            new_node = Link(val, current_node.rest)
+            current_node.rest = new_node
+            current_node = current_node.rest
+        current_node = current_node.rest
+    return 
 
 
 def cumulative_mul(t):
