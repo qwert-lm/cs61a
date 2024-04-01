@@ -126,7 +126,17 @@ def do_and_form(expressions, env):
     False
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+    if not expressions:
+        return True
+    first = expressions.first
+    first = scheme_eval(expressions.first, env)
+    rest = expressions.rest
+    if is_scheme_false(first):
+        return False
+    elif not rest:
+        return first
+    else:
+        return do_and_form(rest, env)
     # END PROBLEM 12
 
 
@@ -145,7 +155,14 @@ def do_or_form(expressions, env):
     6
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+    if not expressions:
+        return False
+    first = scheme_eval(expressions.first, env)
+    rest = expressions.rest
+    if is_scheme_true(first):
+        return first
+    else:
+        return do_or_form(rest, env)
     # END PROBLEM 12
 
 
@@ -248,7 +265,8 @@ def do_mu_form(expressions, env):
     formals = expressions.first
     validate_formals(formals)
     # BEGIN PROBLEM 11
-    "*** YOUR CODE HERE ***"
+    body = expressions.rest
+    return MuProcedure(formals, body)
     # END PROBLEM 11
 
 
