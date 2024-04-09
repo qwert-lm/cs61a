@@ -183,7 +183,11 @@ def do_cond_form(expressions, env):
             test = scheme_eval(clause.first, env)
         if is_scheme_true(test):
             # BEGIN PROBLEM 13
-            "*** YOUR CODE HERE ***"
+            if not clause.rest:
+                val = test
+            else:
+                val = eval_all(clause.rest, env) 
+            return val
             # END PROBLEM 13
         expressions = expressions.rest
 
@@ -209,7 +213,14 @@ def make_let_frame(bindings, env):
         raise SchemeError('bad bindings list in let form')
     names = vals = nil
     # BEGIN PROBLEM 14
-    "*** YOUR CODE HERE ***"
+    validate_form(bindings, 1)
+    cur = bindings
+    while cur != nil:
+        binding = cur.first
+        names = Pair(binding.first, names)
+        vals = Pair(eval_all(binding.rest, env), vals)
+        cur = cur.rest
+    validate_formals(names)
     # END PROBLEM 14
     return env.make_child_frame(names, vals)
 
